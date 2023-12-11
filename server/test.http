@@ -1,0 +1,28 @@
+@host = {{backend_url}}
+
+@contentType = application/json
+
+### test middlewares
+# @name common
+GET {{host}}
+content-type: {{contentType}}
+
+# {
+#     ""
+# }
+
+### 
+GET {{host}}/
+
+###
+GET {{host}}/users
+
+###
+GET {{host}}/products
+
+###
+GET {{host}}/users/2
+
+###
+GET {{host}}/products/3
+
