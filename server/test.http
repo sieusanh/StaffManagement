@@ -26,3 +26,52 @@ GET {{host}}/users/2
 ###
 GET {{host}}/products/3
 
+###
+POST {{host}}/accounts/register
+Content-Type: application/json
+
+{
+    "email": "admin2@gmail.com",
+    "username": "admin2",
+    "password": "abc123",
+    "avatar": "abc.png",
+    "role": "ADMIN"
+}
+
+###
+POST {{host}}/accounts/login
+Content-Type: application/json
+
+{
+    "username": "admin2",
+    "password": "abc123"
+}
+
+### 
+GET {{host}}/accounts/count
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluMkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFkbWluMiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwMjQ2OTU1MSwiZXhwIjoxNzAyNDc2NzUxfQ.Fov_Leu1l4Xllbk2epipkiPUWvrkQV7LG2ZGCBr_nrw
+
+###
+POST {{host}}/posts/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluMkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFkbWluMiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwMjUyMjg2MiwiZXhwIjoxNzAyNTMwMDYyfQ.dX6VrfKl6HYtQ5P7Q7L20vUXyNiJj605s2Ino-brNj0
+Content-Type: application/json
+
+{
+    "title": "Title 1",
+    "content": "Content 1",
+    "author": "Author 1",
+    "likeCount": 1
+}
+
+### 
+GET {{host}}/posts/find
+Content-Type: application/json
+
+###
+PATCH {{host}}/posts/update?_id=657a7005febace2cf9e28c57
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluMkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFkbWluMiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwMjUyNzIxMiwiZXhwIjoxNzAyNTM0NDEyfQ.X83AxzDhej--kEy2CvVdmJ8vD3VeOeIKXabZJ-66amY
+Content-Type: application/json
+
+{
+    "content": "Updated content 1"
+}

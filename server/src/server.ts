@@ -6,12 +6,12 @@ import express, { Request, Response, NextFunction }
     from 'express';
 import path from 'path';
 import database from './database';
-import router from './routes';
+import router from './routers';
 import middlewares from './middlewares';
 import { LogEvents, ErrorHandler } from './libs';
 
 const app = express();
-const { userRouter } = router;
+const { userRouter, accountRouter, postRouter } = router;
 const { common } = middlewares;
 const myPath = path.join(__dirname, '../../client/src/public');
 
@@ -51,7 +51,7 @@ class Server {
         try {
             // Database connection
             await database.connect();
-            console.log('database connected.')
+            console.log('database connected.');
 
             // Run http server
             this.wait();
@@ -74,24 +74,32 @@ class Server {
             // Application-level middleware
             app.use((req: Request, res: Response, next: NextFunction) => {
                 next();
-            })
+            });
 
             app.use('/:id', (req: Request, res: Response, next: NextFunction) => {
                 console.log('type: ', req.method);
                 next();
-            })
+            });
 
             app.use('/users', common, userRouter);
+            app.use('/accounts', common, accountRouter);
+            app.use('/posts', common, postRouter);
 
             // Error-handling middleware
-            app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
-                console.error(err.stack);
+            app.use(async (
+                err: { status: number, message: string },
+                req: Request, res: Response, next: NextFunction) => {
                 await LogEvents(err.message);
-                if (!ErrorHandler.errorHandler.isTrustedError(err)) {
-                    res.status(500).json({ a: 'mes' });
-                }
-
-                await ErrorHandler.errorHandler.handleError(err);
+                const { status, message } = err;
+                console.log('erre: ', err)
+                res.status(status).json({ message });
+                return;
+                // if (!ErrorHandler.errorHandler.isTrustedError(err)) {
+                //     console.log('if')
+                //     res.status(status).json({ message });
+                //     return;
+                // }
+                // await ErrorHandler.errorHandler.handleError(err);
             });
 
         } catch (err) {

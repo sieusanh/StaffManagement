@@ -60,6 +60,7 @@ class ErrorHandler {
 
     public isTrustedError(error: Error) {
         if (error instanceof BaseError) {
+            console.log('er type: ', error.isOperational)
             return error.isOperational;
         }
 
